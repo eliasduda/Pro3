@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
+//verwaltet das movement des players auf einem isometrischen grid (benutzt das pathfinding)
 public class MyPlayer : MonoBehaviour
 {
-    private List<Vector3> path;
+    private List<Vector3> path; //liste an paths (von kästchen zu kästchen = ein path)
     private int pathIndex;
     public int moveSpeed;
+    public bool haspath = false; //gibt an ob der player gerade wohin moved
 
+    //sucht einen Pfad von der aktuellen position zu target
     public void setTarget(Vector3 target)
     {
         pathIndex = 0;
@@ -17,12 +20,14 @@ public class MyPlayer : MonoBehaviour
 
         if(path != null && path.Count > 1)
         {
-            path.RemoveAt(0);
+            path.RemoveAt(0); //entfernt den ersten path da dieser seine eigene position ist
+            haspath = true;
         }
 
         Debug.Log("Path set to length: " + path.Count);
     }
 
+    //moved den player indem alle paths abgearbeitet werden
     public void handleMovement()
     {
         if(path != null)
@@ -41,11 +46,16 @@ public class MyPlayer : MonoBehaviour
                     Debug.Log("stopped Moving");
                 }
             }
-        } 
+        } else
+        {
+
+        }
     }
 
+    //stoppt den player (der pfad wird gelöscht)
     private void StopMoving()
     {
+        haspath = false;
         path = null;
     }
     private Vector3 GetPosition()

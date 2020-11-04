@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//wird benutzt um vom Unity Coordinatensystem zum Isometrischen coordinatensystem umzurechnen
 public static class IsoMatrix
 {
-
+    //definition der Matrix und inversen Matrix
     public static Vector3[] isomatrix = { new Vector3(1, 0.5f, 0), new Vector3(-1, 0.5f, 0), new Vector3(0, 0, 0) };
     public static Vector3[] invisomatrix = { new Vector3(0.5f, -0.5f, 0), new Vector3(1, 1, 0), new Vector3(0, 0, 0) };
 
+    //verschiebt den vector vec ins isometrische coordinatensystem
     public static Vector3 Iso(Vector3 vec)
     {
         float x = vec.x * isomatrix[0].x + vec.y * isomatrix[1].x + vec.z * isomatrix[2].x;
@@ -17,6 +19,7 @@ public static class IsoMatrix
         return newVec;
     }
 
+    //verschiebt den vector vec ins normale coordinatensystem
     public static Vector3 InvIso(Vector3 vec)
     {
         float x = vec.x * invisomatrix[0].x + vec.y * invisomatrix[1].x + vec.z * invisomatrix[2].x;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//NICHT RELEVANT
+//Grafische anzeige für interaktionen mit dem grid
+
 public class MyHeatMap : MonoBehaviour
 {
     private MyGrid<HeatMapObject> grid;

@@ -5,48 +5,32 @@ using CodeMonkey;
 using CodeMonkey.Utils;
 using Unity.Mathematics;
 
+//Tests the player and pathfinding per mouseclick
 public class MyTesting : MonoBehaviour
 {
     [SerializeField] private MyPlayer player;
     [SerializeField] private Pathfinding pathfinding;
-    [SerializeField] private MyHeatMap heatMap;
-    private MyGrid<HeatMapObject> testGrid;
     
 
 
     private void Start()
     {
         pathfinding = new Pathfinding(5, 5);
-        pathfinding.setObstacles();
-
-        //heatmap
-        //testGrid = new MyGrid<HeatMapObject>(10, 10, 10f, transform.position, (MyGrid<HeatMapObject> g, int x, int y)=>new HeatMapObject(g,x,y));
-        //heatMap.SetGrid(testGrid);
+        pathfinding.setObstacles(); //look for obstacles
 
     }
 
     private void Update()
     {
-       player.handleMovement();
-
-       if (Input.GetMouseButtonDown(0))
-        {   
-            /* heatmap
-            Vector3 mouseP = UtilsClass.GetMouseWorldPosition();
-            HeatMapObject currentValue = testGrid.GetGridObject(mouseP);
-            if (currentValue != null)
-            {
-                currentValue.AddValue(5);
-            }
-            */
-        }
-       
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 mouseP = UtilsClass.GetMouseWorldPosition();
-            player.setTarget(mouseP);
+            if (!player.haspath) //gibt dem player inen pfad wenn dieser gerade keinen hat
+            {
+                player.setTarget(mouseP);
+            }
 
-            //DEBUG
+            //DEBUG  zeichnet player pfad
             List<Vector3> path = pathfinding.FindPathV3(IsoMatrix.InvIso(player.transform.position), IsoMatrix.InvIso(mouseP));
 
             if (path != null)
@@ -59,48 +43,5 @@ public class MyTesting : MonoBehaviour
             }
             
         }
-    }
-}
-
-public class HeatMapObject
-{
-    private int min = 0, max = 100;
-    private int x, y;
-    private int value;
-    private MyGrid<HeatMapObject> grid;
-    
-    public HeatMapObject(MyGrid<HeatMapObject> grid, int x, int y)
-    {
-        this.grid = grid;
-        this.x = x;
-        this.y = y;
-        value = 0;
-    }
-
-    public void AddValue(int value)
-    {
-        this.value += value;
-        Mathf.Clamp(value, min, max);
-        grid.TriggerObjectChanged(x,y);
-    }
-
-    public int GetMax()
-    {
-        return max;
-    }
-
-    public int GetValue()
-    {
-        return value;
-    }
-
-    public float GetNormalizedValue()
-    {
-        return (float)value/max;
-    }
-
-    public override string ToString()
-    {
-        return value.ToString();
     }
 }
