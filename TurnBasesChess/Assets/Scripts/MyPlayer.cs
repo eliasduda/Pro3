@@ -22,9 +22,14 @@ public class MyPlayer : MonoBehaviour
         {
             path.RemoveAt(0); //entfernt den ersten path da dieser seine eigene position ist
             haspath = true;
+            Debug.Log("Path set to length: " + path.Count);
+        }
+        else
+        {
+            Debug.Log("Player has no valid path");
         }
 
-        Debug.Log("Path set to length: " + path.Count);
+        
     }
 
     //moved den player indem alle paths abgearbeitet werden
@@ -48,14 +53,13 @@ public class MyPlayer : MonoBehaviour
             }
         } else
         {
-
+            haspath = false;
         }
     }
 
     //stoppt den player (der pfad wird gelöscht)
     private void StopMoving()
     {
-        haspath = false;
         path = null;
     }
     private Vector3 GetPosition()

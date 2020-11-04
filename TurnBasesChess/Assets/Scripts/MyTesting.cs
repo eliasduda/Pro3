@@ -15,30 +15,32 @@ public class MyTesting : MonoBehaviour
 
     private void Start()
     {
-        pathfinding = new Pathfinding(5, 5);
+        pathfinding = new Pathfinding(10, 10);
         pathfinding.setObstacles(); //look for obstacles
 
     }
 
     private void Update()
     {
+        player.handleMovement();
+
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 mouseP = UtilsClass.GetMouseWorldPosition();
-            if (!player.haspath) //gibt dem player inen pfad wenn dieser gerade keinen hat
+            if (!player.haspath) //pfad wird gesetzt wenn der player nicht bereits einen hat
             {
                 player.setTarget(mouseP);
-            }
 
-            //DEBUG  zeichnet player pfad
-            List<Vector3> path = pathfinding.FindPathV3(IsoMatrix.InvIso(player.transform.position), IsoMatrix.InvIso(mouseP));
+                //DEBUG  zeichnet player pfad
+                List<Vector3> path = pathfinding.FindPathV3(IsoMatrix.InvIso(player.transform.position), IsoMatrix.InvIso(mouseP));
 
-            if (path != null)
-            {
-                for (int i = 0; i<path.Count -1; i++)
+                if (path != null)
                 {
-                    Debug.DrawLine(path[i],  path[i+1], Color.red, 500f);
+                    for (int i = 0; i < path.Count - 1; i++)
+                    {
+                        Debug.DrawLine(path[i], path[i + 1], Color.red, 500f);
 
+                    }
                 }
             }
             

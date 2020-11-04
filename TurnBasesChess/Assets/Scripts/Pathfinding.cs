@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Algorithmus welcher den schnellsten pfad auf einem Grid berechnet (benutzt MyGrid)
 public class Pathfinding
 {
-    public static Pathfinding Instance { get; private set; }
+    public static Pathfinding Instance { get; private set; } //Instanz variable zeigt auf das gerade aktive Pathfinding object
 
-    private const int MOVE_DIAGONAL_COST = 14, MOVE_STRAIGHT_COST = 10;
+    private const int MOVE_DIAGONAL_COST = 14, MOVE_STRAIGHT_COST = 10; //Kosten der einzelnen bewegungen
     private MyGrid<PathNode> grid;
     private List<PathNode> openList, closedList;
     public Pathfinding(int width, int height)
