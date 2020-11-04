@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MyPlayer : MonoBehaviour
 {
+    //Test
     private List<Vector3> path;
     private int pathIndex;
     public int moveSpeed;
